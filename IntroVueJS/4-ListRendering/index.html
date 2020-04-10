@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 4-List Rendering</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        h1{
+            margin: 0px;
+        }
+
+        .dieuKien{
+            background-color: green;
+            color: white;
+            border: 1px solid;
+            text-align: center;
+        }
+
+        .dieuKienBoSung{
+            background-color: blue;
+            color: white;
+            border: 1px solid;
+            text-align: center;
+        }
+
+        .dieuKienBoSungVShow{
+            background-color: rgb(158, 40, 148);
+            color: white;
+            border: 1px solid;
+            text-align: center;
+        }
+
+        .product {
+            text-align: center;
+        }
+
+        .product-info{
+            margin: 0;
+            text-align: center;
+            text-shadow: 1px 1px #ff0000;
+        }
+
+        .product-image {
+            display: flexbox;
+        }
+
+        img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <!--Kết xuất danh sách sử dụng v-for -->
+    <div id="app">
+        <div class="product">
+            <!--Ảnh sản phẩm-->
+            <div class="product-image">
+                <img v-bind:src="image" alt="Tất" srcset="">
+            </div>
+
+            <!--Thông tin sản phẩm-->
+            <div class="product-info">
+                <h1>{{product}}</h1>
+                <span v-show="onSale">Giảm giá</span>
+            </div>
+
+
+            
+            <hr>
+            <!--Kết xuất danh sách cho đối tượng-->
+            <div class="ketXuatDanhSach">
+                <ul>
+                    <li v-for="(item, index) in details" :key="index">{{item}}</li>
+                </ul>
+            </div>
+            <hr>
+            <div v-for="(item, index) in variants" :key="item.variantID">
+                <p>{{item.variantColor}}</p>
+            </div>
+            <hr>
+
+
+
+            <!--Cú pháp điều kiện-->
+            <div class="dieuKien">
+                <p v-if="inStock">Còn trong kho</p>
+                <p v-else>Hết hàng</p>
+            </div>
+            
+
+            <!--Cú pháp điều kiện bổ sung-->
+            <div class="dieuKienBoSung">
+                <p v-if="soLuong>10">Còn hàng</p>
+                <p v-else-if="soLuong > 0 && soLuong<=10">Còn rất ít</p>
+                <p v-else>Không còn</p>
+            </div>
+
+            <!--Cú pháp điều kiện bổ sung v-show tương đương css display:none-->
+            <div class="dieuKienBoSungVShow">
+                <p v-show="inStock">Sử dụng V-show</p>
+            </div>
+    
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

@@ -24,12 +24,22 @@ var app = new Vue({
     methods: {
         traHang(){
             if(this.cart>0)
-            this.cart-=1;
+            {
+                this.cart-=1;
+                this.inStock=true;
+            }
+            
         },
         doiHinh(variantImage){
             this.image=variantImage;
+        },
+        themGioHang(){
+            if(this.cart<this.soLuong){
+                this.cart= this.cart+1;
+            }else this.inStock=false;
+            
         }
     },
 })
 
-/** Sử dụng sự kiện mouseover nhằm thay đổi ảnhảnh  */
+/**  Khi inStock= false thì dùng style text-decoration: line-through và sử dụng mảng class*/

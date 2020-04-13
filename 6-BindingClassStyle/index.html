@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài 5-Event Handling (xử lý sự kiện)</title>
+    <title>Bài 6-Binding Class and Style</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
 
 <body>
-    <!--xử lý sự kiện dùng v-on hoặc shortHand là @ -->
+    <!--Rằng buộc thuộc tính style và class sử dụng :-->
     <div id="app">
         <div class="product">
             <!--Ảnh sản phẩm-->
@@ -28,20 +28,29 @@
 
             <!--Cú pháp điều kiện-->
             <div class="dieuKien">
-                <p v-if="inStock">Còn trong kho</p>
+                <p v-if="inStock">Còn trong kho {{soLuong - cart}}</p>
                 <p v-else>Hết hàng</p>
             </div>
 
             <hr>
 
             <!--Kết xuất danh sách cho đối tượng-->
-            <div v-for="(item, index) in variants" :key="item.variantID">
-                <p @mouseover="doiHinh(item.variantImage)" style="border:1px solid red; padding: 5px;">{{item.variantColor}}</p>
+            <!--Rằng buộc thuộc tính style và class-->
+            <div class="color-box"
+            v-for="(item, index) in variants" 
+            :key="item.variantID"
+            :style="{backgroundColor:item.variantColor}"
+            >
+                <p @mouseover="doiHinh(item.variantImage)">{{item.variantColor}}</p>
             </div>
             <hr>
 
             <div class="gioHang">
-                <button @click="cart++">Mua thêm hàng</button>
+                <button 
+                :disabled="!inStock" 
+                @click="themGioHang"
+                :class="{disabledButton:!inStock}"
+                >Mua thêm hàng</button>
                 <button v-on:click="traHang">Trả sản phẩm</button>
                 &nbsp;
                 <label>{{cart}}</label>

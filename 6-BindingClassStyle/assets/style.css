@@ -3,7 +3,7 @@ h1 {
 }
 
 .dieuKien {
-    background-color: green;
+    background-color: rgb(128, 0, 128);
     color: white;
     border: 1px solid;
     text-align: center;
@@ -41,4 +41,9 @@ img {
     width: 250px;
     height: 250px;
     object-fit: cover;
+}
+
+.disabledButton{
+    background-color: #ff0000;
+    color: aliceblue;
 }

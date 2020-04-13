@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài 6-Binding Class and Style</title>
+    <title>Bài 7-Computed</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
 
 <body>
-    <!--Rằng buộc thuộc tính style và class sử dụng :-->
+    <!--Sử dụng thuộc tính để tính toán Computed-->
     <div id="app">
         <div class="product">
             <!--Ảnh sản phẩm-->
@@ -18,9 +18,9 @@
                 <img v-bind:src="image" alt="Tất" srcset="">
             </div>
 
-            <!--Thông tin sản phẩm-->
+            <!--Thông tin sản phẩm sử dụng computed-->
             <div class="product-info">
-                <h1>{{product}}</h1>
+                <h1>{{titleProduct}}</h1>
                 <span v-show="onSale">Giảm giá</span>
             </div>
 
@@ -33,7 +33,11 @@
             </div>
 
             <hr>
-
+            <!--Chi tiết sản phẩm-->
+            <ul>
+                <li v-for="(item, index) in details" :key="index">{{item}}</li>
+            </ul>
+            <hr>
             <!--Kết xuất danh sách cho đối tượng-->
             <!--Rằng buộc thuộc tính style và class-->
             <div class="color-box"
@@ -41,7 +45,7 @@
             :key="item.variantID"
             :style="{backgroundColor:item.variantColor}"
             >
-                <p @mouseover="doiHinh(item.variantImage)">{{item.variantColor}}</p>
+                <p @mouseover="doiHinhIndex(index)">{{item.variantColor}}</p>
             </div>
             <hr>
 

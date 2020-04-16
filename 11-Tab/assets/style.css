@@ -52,3 +52,16 @@ img {
     width: 500px;
    left: 50%;
 }
+
+.tab1{
+    color: green;
+    margin: 20px;
+    border: 1px solid red;
+    padding: 10px;
+}
+
+.activeTab{
+    color: violet;
+    text-decoration: underline;
+}
+

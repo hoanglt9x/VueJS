@@ -17,7 +17,7 @@ Vue.component('product',{
 
     <!--Cú pháp điều kiện-->
     <div class="dieuKien">
-        <p v-if="inStock">Còn trong kho {{soLuong - cart}}</p>
+        <p v-if="inStock">Còn trong kho</p>
         <p v-else>Hết hàng</p>
     </div>
 
@@ -44,9 +44,9 @@ Vue.component('product',{
         @click="themGioHang"
         :class="{disabledButton:!inStock}"
         >Mua thêm hàng</button>
-        <button v-on:click="traHang">Trả sản phẩm</button>
+        <button @click="traHang">Trả sản phẩm</button>
         &nbsp;
-        <label>{{cart}}</label>
+       
     </div>
 </div>
 `,
@@ -74,32 +74,25 @@ Vue.component('product',{
                 variantID: 199,
                 variantColor: 'red',
                 variantImage:'./assets/tatxanh.jpeg',
-                variantQuantity:0
+                variantQuantity:5
             }
         ],
-        cart:0,
         brand: 'Samcom',
         selectedVatiant:0
         }
     },
     methods: {
         traHang(){
-            if(this.cart>0)
-            {
-                this.cart-=1;
-                this.inStock=true;
-            }
-            
+                this.$emit('remove-to-cart',this.variants[this.selectedVatiant].variantID);
         },
         doiHinh(variantImage){
             this.image=variantImage;
             console.log(variantImage);
         },
         themGioHang(){
-            if(this.cart<this.soLuong){
-                this.cart= this.cart+1;
-            }else this.inStock=false;
-            
+                //this.$emit('add-to-cart');
+                this.$emit('add-to-cart',this.variants[this.selectedVatiant].variantID);
+                
         },
         doiHinhIndex(index){
             this.selectedVatiant=index;
@@ -122,28 +115,33 @@ Vue.component('product',{
             else return "Mất 100.000 vnđ"
         }
   }
-})
+});
 
 var app = new Vue({
     el:'#app',
     data:{
-       premium: true
+       premium: true,
+       cart: []
     },
     computed: {
         
     },
     methods: {
-        
+        updateCart(id){
+            this.cart.push(id);
+        },
+        renderCart(id){
+            if(id===198) return 'Tất đỏ';
+            else if(id===199) return 'Tất xanh';
+        },
+        removeCart(id){
+            let i=this.cart.indexOf(id);
+            console.log('sản phẩm trả là'+i);
+            this.cart.splice(i,1);
+        }
     },
 })
 
-/** Tạo một thành phần mới cho product-detailsvới một prop details.
-Components are blocks of code, grouped together within a custom element
-Components make applications more manageable by breaking up the whole into reusuable parts that have their own structure and behavior
-Data on a component must be a function
-Props are used to pass data from parent to child
-We can specify requirements for the props a component is receiving
-Props are fed into a component through a custom attribute
-Props can be dynamically bound to the parent’s data
-Vue dev tools provide helpful insight about your components
+/** Thêm một nút loại bỏ sản phẩm khỏi mảng giỏ hàng bằng cách phát ra một sự kiện với id của sản phẩm sẽ bị xóa.
 */
+

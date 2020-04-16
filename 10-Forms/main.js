@@ -117,11 +117,69 @@ Vue.component('product',{
   }
 });
 
+//Thêm phần đánh giá sản phẩm
+Vue.component('product-review',{
+    template:`<form class="review-form" @submit.prevent="onSubmit">
+    <p>
+        <label for="name">Name:</label>
+        <input id="name" v-model="name" placeholder="name" required>
+      </p>
+      
+      <p>
+        <label for="review">Review:</label>      
+        <textarea id="review" v-model="review" required></textarea>
+      </p>
+      
+      <p>
+        <label for="rating" required>Rating:</label>
+        <select id="rating" v-model.number="rating">
+          <option>5</option>
+          <option>4</option>
+          <option>3</option>
+          <option>2</option>
+          <option>1</option>
+        </select>
+      </p>        
+      <p>
+        <input type="submit" value="Submit">  
+      </p>   
+      
+      <p>
+      <label for="introProduct">Bạn có muốn giới thiệu sản phẩm</label>
+        <input type="checkbox" v-model="introProduct" id="introProduct">
+     </p>
+</form>`,
+    data() {
+        return {
+            name: null,
+            review:null,
+            rating:null,
+            introProduct:false
+        }
+    },
+    methods: {
+        onSubmit() {
+            let productReview = {
+                name: this.name,
+                review: this.review,
+                rating: this.rating,
+                introProduct:this.introProduct
+              }
+              this.$emit('review-submitted', productReview);
+              this.name = null;
+              this.review = null;
+              this.rating = null;
+              this.introProduct=false;
+        }
+    },
+})
+
 var app = new Vue({
     el:'#app',
     data:{
        premium: true,
-       cart: []
+       cart: [],
+       reviews:[]
     },
     computed: {
         
@@ -138,10 +196,13 @@ var app = new Vue({
             let i=this.cart.indexOf(id);
             console.log('sản phẩm trả là'+i);
             this.cart.splice(i,1);
-        }
+        },
+        addReview(productReview) {
+            this.reviews.push(productReview)
+          }
     },
 })
 
-/** Thêm một nút loại bỏ sản phẩm khỏi mảng giỏ hàng bằng cách phát ra một sự kiện với id của sản phẩm sẽ bị xóa.
+/** Thêm một câu hỏi vào mẫu: Bạn có muốn giới thiệu sản phẩm này. Sau đó nhận phản hồi đó từ người dùng thông qua các nút radio của vâng có hay hay không và thêm nó vào productReviewđối tượng, với xác nhận mẫu.
 */
 

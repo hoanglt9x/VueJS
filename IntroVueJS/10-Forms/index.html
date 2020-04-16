@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 10-Form</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+
+<body>
+    <!--Học cách làm việc với Form thu thập dữ liệu nhập người dùng-->
+    <!--Cách xác thực một số form tùy chỉnh-->
+    <!--Sử dụng v-model để gửi giá trị từ template vào data-->
+    <!--Sử dụng prevent để ngăn tải lại trang-->
+
+    
+
+    <div id="app">
+        <product :premium="premium" @remove-to-cart="removeCart" @add-to-cart="updateCart"></product>
+        <p>{{cart.length}}</p>
+        <div v-for="item in cart" :key="item.id">
+            {{ renderCart(item)}}
+        </div>
+        <product-review @review-submitted="addReview"></product-review> 
+
+        <div>
+            <h2>Reviews</h2>
+            <p v-if="!reviews.length">There are no reviews yet.</p>
+            <ul>
+              <li v-for="review in reviews">
+              <p>{{ review.name }}</p>
+              <p>Rating: {{ review.rating }}</p>
+              <p>{{ review.review }}</p>
+              <p>{{review.introProduct ? 'Có giới thiệu' :'không giới thiệu'}}</p>
+              </li>
+            </ul>
+           </div>
+
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
